@@ -1,5 +1,7 @@
 {
     "name": "Test-API",
     "version": "1.0.0",
-    "start": "index.js"
+    "scripts": {
+        "start": "node index.js"
+    }
 }
