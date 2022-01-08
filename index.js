@@ -27,7 +27,8 @@ app.get('/genkey', (req, res) => {
     const hashedkey = keyData.hashedkey
 
     database[hashedkey] = { 'active': true, 'hashedkey': hashedkey, 'timeperiod': tp, 'timestamp': Date.now() }
-    res.send("Your api key: <b>" + apikey + "</b> this lasts for " + tp + " minute(s)")
+    res.send({ apikey, tp })
+        // res.send("Your api key: <b>" + apikey + "</b> this lasts for " + tp + " minute(s)")
 })
 
 // used to validate an api key 
@@ -39,7 +40,8 @@ app.get('/validate', (req, res) => {
     console.log(apikey)
 
     if (!apikey) {
-        res.send("No api key passed through")
+        res.send({ "1": "401" })
+            // res.send("No api key passed through")
         return
     }
 
@@ -47,9 +49,11 @@ app.get('/validate', (req, res) => {
     isValid = validate(hashed)
 
     if (isValid == true) {
-        res.send("Your api key is still valid")
+        res.send(true)
+            // res.send("Your api key is still valid")
     } else {
-        res.send("Your api key is not valid")
+        res.send(false)
+            // res.send("Your api key is not valid")
     }
 })
 
@@ -60,7 +64,8 @@ app.get('/api/get', (req, res) => {
     const hash = keygen.hashApiKey
 
     if (!apikey) {
-        res.send("No api key passed through")
+        res.send({ "1": "401" })
+            // res.send("No api key passed through")
         return
     }
 
@@ -68,10 +73,12 @@ app.get('/api/get', (req, res) => {
     isValid = validate(hashed)
 
     if (isValid == false) {
-        res.send("Your api key is not valid")
+        res.send({ "1": false })
+            // res.send("Your api key is not valid")
     }
 
-    res.send("Congrats you have logged into my useless api")
+    res.send({ "1": "201" })
+        // res.send("Congrats you have logged into my useless api")
 })
 
 // listens on the designated port
